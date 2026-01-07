@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vœux 2026 - Gan Pat 17</title>
+  <style>
+    :root{
+      --gan-green:#0B7A4B;
+      --gan-blue:#1E4E8C;
+      --gan-yellow:#F2C94C;
+      --text:#0f172a;
+      --muted:#475569;
+      --card:#ffffff;
+      --bg:#f6f8fb;
+      --border:#e2e8f0;
+      --shadow:0 10px 25px rgba(2,6,23,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: var(--bg); color:var(--text);
+      display:grid; place-items:center; min-height:100vh; padding:18px;
+    }
+
+    .frame{
+      width:min(980px, 96vw);
+      aspect-ratio: 1 / 1;
+      background:linear-gradient(180deg,#ffffff 0%, #f7fbff 100%);
+      border:1px solid var(--border);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .pad{ padding:22px; height:100%; display:flex; flex-direction:column; gap:14px; }
+
+    .header{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:16px;
+    }
+    h1{
+      margin:0;
+      font-size: clamp(20px, 2.4vw, 34px);
+      line-height:1.15;
+      letter-spacing:-.02em;
+    }
+    .tag{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      background:#f1f5f9;
+      border:1px solid var(--border);
+      border-radius: 999px;
+      color:var(--muted);
+      font-weight:600;
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .dot{width:10px; height:10px; border-radius:50%; background:var(--gan-green);}
+
+    .grid{
+      flex:1;
+      display:grid;
+      grid-template-columns: 1.05fr 1.35fr;
+      gap:16px;
+      min-height:0;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 6px 16px rgba(2,6,23,.05);
+      overflow:hidden;
+    }
+    .card-inner{ padding:16px; height:100%; }
+
+    /* Left column */
+    .left-top{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      height:100%;
+    }
+    .logo{
+      width:170px; max-width:60%;
+      height:auto;
+      display:block;
+    }
+    .intro{
+      padding:14px;
+      border-radius: 14px;
+      background:#f8fafc;
+      border:1px dashed #cbd5e1;
+      color:var(--muted);
+    }
+    .intro strong{color:var(--text)}
+    .club{
+      margin-top:auto;
+      padding:14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg,#ffffff 0%, #f9fbff 100%);
+    }
+    .club .label{
+      font-size:12px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted);
+      margin-bottom:8px; font-weight:700;
+    }
+    .club .hint{ color:var(--muted); font-size:14px; line-height:1.4; }
+
+    /* Wheel */
+    .wheel-wrap{
+      height:100%;
+      display:grid;
+      grid-template-rows: auto 1fr auto;
+      gap:12px;
+      min-height:0;
+    }
+    .wheel-row{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .wheel-title{
+      font-weight:800; font-size:15px;
+    }
+    .wheel-area{
+      display:grid;
+      place-items:center;
+      min-height:0;
+      position:relative;
+      padding:10px;
+    }
+    canvas{
+      width:min(420px, 92%);
+      height:auto;
+      aspect-ratio: 1/1;
+      display:block;
+    }
+    .pointer{
+      position:absolute;
+      top:6px;
+      width:0; height:0;
+      border-left:12px solid transparent;
+      border-right:12px solid transparent;
+      border-bottom:20px solid var(--gan-blue);
+      filter: drop-shadow(0 6px 8px rgba(2,6,23,.2));
+    }
+    .controls{
+      display:flex; gap:10px; align-items:center; justify-content:center;
+      padding:10px 0 0;
+      flex-wrap:wrap;
+    }
+    .btn{
+      appearance:none; border:0; cursor:pointer;
+      padding:12px 16px;
+      border-radius: 999px;
+      font-weight:800;
+      letter-spacing:.02em;
+      transition: transform .08s ease, opacity .2s ease;
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    }
+    .btn:active{ transform: scale(.98); }
+    .btn-start{
+      background: var(--gan-green);
+      color:white;
+      box-shadow: 0 10px 18px rgba(11,122,75,.18);
+      min-width:150px;
+    }
+    .btn-start[disabled]{ opacity:.55; cursor:not-allowed; }
+
+    .theme-card{
+      padding:14px;
+      border-top:1px solid var(--border);
+      background:#ffffff;
+    }
+    .theme-label{
+      font-size:12px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted);
+      font-weight:800;
+    }
+    .theme-title{
+      margin:6px 0 8px; font-weight:900; font-size:18px; color:var(--gan-blue);
+    }
+    .theme-text{
+      margin:0; color:var(--text); line-height:1.4;
+      font-size:14px;
+    }
+
+    /* Bottom row */
+    .bottom{
+      display:grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap:16px;
+    }
+    .photo{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius: var(--radius);
+      border:1px solid var(--border);
+      background:#e2e8f0;
+      display:block;
+      min-height:120px;
+    }
+    .wishes{
+      display:flex; flex-direction:column; gap:10px; height:100%;
+      justify-content:space-between;
+    }
+    .wishes .copy{
+      padding:14px;
+      border-radius: var(--radius);
+      border:1px solid var(--border);
+      background:#ffffff;
+    }
+    .wishes .copy .big{
+      font-weight:900; font-size:16px; margin:0 0 6px;
+    }
+    .wishes .copy .small{
+      margin:0; color:var(--muted); font-size:13px; line-height:1.35;
+    }
+    .btn-rdv{
+      background: var(--gan-yellow);
+      color:#1f2937;
+      box-shadow: 0 10px 18px rgba(242,201,76,.25);
+      text-decoration:none;
+      text-align:center;
+    }
+
+    @media (max-width: 860px){
+      .frame{ aspect-ratio:auto; }
+      .grid{ grid-template-columns: 1fr; }
+      .bottom{ grid-template-columns: 1fr; }
+      .pad{ padding:16px; }
+      .tag{ display:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="frame" role="img" aria-label="Vœux 2026 Gan Patrimoine - roue interactive">
+    <div class="pad">
+
+      <div class="header">
+        <h1>En 2026, voulez-vous faire partie du club Gan Pat 17&nbsp;?</h1>
+        <div class="tag"><span class="dot"></span> Club exclusif • Vœux 2026</div>
+      </div>
+
+      <div class="grid">
+
+        <!-- LEFT -->
+        <div class="card">
+          <div class="card-inner left-top">
+            <!-- Remplace src par ton fichier logo -->
+            <img class="logo" src="logo-gan-patrimoine.png" alt="Logo Gan Patrimoine" />
+
+            <div class="intro">
+              <strong>Votre année sera placée sous le signe de :</strong><br/>
+              Faites tourner la roue pour découvrir le thème du moment, puis prenez rendez-vous.
+            </div>
+
+            <div class="club">
+              <div class="label">Gan Pat 17</div>
+              <div class="hint">
+                Une approche <strong>sur-mesure</strong> autour de l’épargne, la retraite, la protection et la stratégie patrimoniale.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="card">
+          <div class="wheel-wrap">
+            <div class="card-inner" style="padding-bottom:0">
+              <div class="wheel-row">
+                <div class="wheel-title">Roue patrimoniale</div>
+              </div>
+            </div>
+
+            <div class="wheel-area">
+              <div class="pointer" aria-hidden="true"></div>
+              <canvas id="wheel" width="520" height="520"></canvas>
+            </div>
+
+            <div class="card-inner" style="padding-top:0">
+              <div class="controls">
+                <button id="startBtn" class="btn btn-start">LANCER</button>
+              </div>
+            </div>
+
+            <!-- TEXTE THÉMATIQUE (séparé des vœux) -->
+            <div class="theme-card" aria-live="polite">
+              <div class="theme-label">Thématique</div>
+              <div id="themeTitle" class="theme-title">Cliquez sur LANCER</div>
+              <p id="themeText" class="theme-text">La roue s’arrêtera sur un thème aléatoire.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- BOTTOM -->
+      <div class="bottom">
+        <div>
+          <!-- Remplace src par ta photo de groupe -->
+          <img class="photo" src="photo-groupe.jpg" alt="Photo des conseillers Gan Pat 17" />
+        </div>
+
+        <!-- VŒUX (séparés du texte thématique) -->
+        <div class="wishes">
+          <div class="copy">
+            <p class="big">Votre conseiller vous présente ses meilleurs vœux</p>
+            <p class="small">Disponibilités sur rendez-vous • La Rochelle / Rochefort • Gan Patrimoine</p>
+          </div>
+
+          <a class="btn btn-rdv" href="https://forms.gle/MgPuFXV8FjXicg8UA" target="_blank" rel="noopener">
+            PRENDRE RDV
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+  const segments = [
+    { label: "Épargne",      color: "#EAF6F0", text: "Vous souhaitez valoriser un capital ou une capacité d’épargne ?" },
+    { label: "Retraite",     color: "#E8F0FB", text: "Connaissez-vous le montant de votre future retraite, comment combler l’écart avec votre niveau de vie souhaité ?" },
+    { label: "Prévoyance",   color: "#F1F5F9", text: "En cas d’accident de la vie comment assurer la pérennité de revenus de votre famille et protéger votre conjoint ?" },
+    { label: "Fiscalité",    color: "#FFF7E6", text: "Comment vous assurer que vos revenus soient bien déclarés, optimiser votre fiscalité 2026 dans un contexte de Loi de finance incertain ?" },
+    { label: "Transmission", color: "#F7F2FF", text: "Comment transmettre favorablement à vos enfants sans vous déposséder et tout en protégeant le conjoint survivant ?" },
+    { label: "Immobilier",   color: "#EAF2FF", text: "Vous souhaiter investir dans la pierre physique ou pierre papier pour vous constituer des revenus à échéances ou générer des revenus immédiats ?" }
+  ];
+
+  const canvas = document.getElementById("wheel");
+  const ctx = canvas.getContext("2d");
+  const startBtn = document.getElementById("startBtn");
+  const themeTitle = document.getElementById("themeTitle");
+  const themeText  = document.getElementById("themeText");
+
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2;
+  const radius = Math.min(cx, cy) - 16;
+  const segAngle = (Math.PI * 2) / segments.length;
+
+  let rotation = 0;
+  let spinning = false;
+
+  function drawWheel(rot = 0){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    // fond/ombre douce
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI*2);
+    ctx.shadowColor = "rgba(2,6,23,.10)";
+    ctx.shadowBlur = 18;
+    ctx.fillStyle = "#fff";
+    ctx.fill();
+    ctx.restore();
+
+    for(let i=0; i<segments.length; i++){
+      const a0 = rot + i * segAngle;
+      const a1 = a0 + segAngle;
+
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, radius, a0, a1);
+      ctx.closePath();
+      ctx.fillStyle = segments[i].color;
+      ctx.fill();
+
+      ctx.strokeStyle = "#e2e8f0";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // texte
+      const mid = (a0 + a1) / 2;
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(mid);
+      ctx.textAlign = "right";
+      ctx.fillStyle = "#0f172a";
+      ctx.font = "800 22px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial";
+      ctx.fillText(segments[i].label, radius - 18, 8);
+      ctx.restore();
+    }
+
+    // anneau
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI*2);
+    ctx.strokeStyle = "#cbd5e1";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    // centre
+    ctx.beginPath();
+    ctx.arc(cx, cy, 78, 0, Math.PI*2);
+    ctx.fillStyle = "#ffffff";
+    ctx.fill();
+    ctx.strokeStyle = "#e2e8f0";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // libellé centre
+    ctx.fillStyle = "#1E4E8C";
+    ctx.font = "900 18px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("GAN PAT 17", cx, cy + 6);
+  }
+
+  function normalizeAngle(a){
+    const twoPi = Math.PI * 2;
+    return ((a % twoPi) + twoPi) % twoPi;
+  }
+
+  function pickedSegmentIndex(rot){
+    const pointerAngle = -Math.PI / 2; // pointeur en haut
+    const a = normalizeAngle(pointerAngle - rot);
+    return Math.floor(a / segAngle);
+  }
+
+  function setTheme(idx){
+    const s = segments[idx];
+    themeTitle.textContent = s.label;
+    themeText.textContent  = s.text;
+  }
+
+  function spin(){
+    if(spinning) return;
+    spinning = true;
+    startBtn.disabled = true;
+
+    const extraSpins = 5 + Math.random() * 3; // 5 à 8 tours
+    const targetIndex = Math.floor(Math.random() * segments.length);
+
+    const pointerAngle = -Math.PI / 2;
+    const eps = segAngle * 0.5; // centre du segment
+    const desiredWheelAngle = targetIndex * segAngle + eps;
+
+    let rotFinal = pointerAngle - desiredWheelAngle;
+    rotFinal -= extraSpins * Math.PI * 2;
+
+    const rotStart = rotation;
+    const rotEnd = rotFinal;
+
+    const duration = 2200 + Math.random() * 800;
+    const t0 = performance.now();
+
+    function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+
+    function frame(now){
+      const t = Math.min(1, (now - t0) / duration);
+      const e = easeOutCubic(t);
+      rotation = rotStart + (rotEnd - rotStart) * e;
+      drawWheel(rotation);
+
+      if(t < 1){
+        requestAnimationFrame(frame);
+      } else {
+        spinning = false;
+        startBtn.disabled = false;
+        setTheme(pickedSegmentIndex(rotation));
+      }
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  drawWheel(rotation);
+  startBtn.addEventListener("click", spin);
+</script>
+
+</body>
+</html>
