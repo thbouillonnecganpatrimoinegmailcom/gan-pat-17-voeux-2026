@@ -5,16 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Vœux 2026 - Gan Pat 17</title>
   <style>
-    .title-one-line{
-  white-space: nowrap;          /* force 1 seule ligne */
-  font-size: clamp(18px, 2.2vw, 34px); /* léger ajustement */
-  letter-spacing:-.02em;
-}
-@media (max-width: 520px){
-  .title-one-line{
-    white-space: normal;  /* sur petits écrans, on autorise 2 lignes */
-  }
-}
     :root{
       --gan-green:#0B7A4B;
       --gan-blue:#1E4E8C;
@@ -29,9 +19,14 @@
     }
     *{box-sizing:border-box}
     body{
-      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background: var(--bg); color:var(--text);
-      display:grid; place-items:center; min-height:100vh; padding:18px;
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: var(--bg);
+      color:var(--text);
+      display:grid;
+      place-items:center;
+      min-height:100vh;
+      padding:18px;
     }
     .frame{
       width:min(980px, 96vw);
@@ -42,37 +37,98 @@
       box-shadow: var(--shadow);
       overflow:hidden;
     }
-    .pad{ padding:22px; height:100%; display:flex; flex-direction:column; gap:14px; }
-    <div class="header">
-  <h1 class="title-one-line">En 2026, voulez-vous faire partie du club Gan Patrimoine 17&nbsp;?</h1>
-</div>
+    .pad{
+      padding:22px;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
     }
-    .dot{width:10px; height:10px; border-radius:50%; background:var(--gan-green);}
 
-    .grid{ flex:1; display:grid; grid-template-columns: 1.05fr 1.35fr; gap:16px; min-height:0; }
+    .header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:flex-start; /* tag supprimé */
+      gap:16px;
+    }
+    /* Titre sur une ligne (desktop), 2 lignes autorisées sur petits écrans */
+    .title-one-line{
+      margin:0;
+      font-size: clamp(18px, 2.2vw, 34px);
+      line-height:1.15;
+      letter-spacing:-.02em;
+      white-space: nowrap;
+    }
+    @media (max-width: 520px){
+      .title-one-line{ white-space: normal; }
+    }
+
+    .grid{
+      flex:1;
+      display:grid;
+      grid-template-columns: 1.05fr 1.35fr;
+      gap:16px;
+      min-height:0;
+    }
     .card{
-      background:var(--card); border:1px solid var(--border); border-radius: var(--radius);
-      box-shadow: 0 6px 16px rgba(2,6,23,.05); overflow:hidden;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 6px 16px rgba(2,6,23,.05);
+      overflow:hidden;
     }
     .card-inner{ padding:16px; height:100%; }
 
-    .left-top{ display:flex; flex-direction:column; gap:14px; height:100%; }
-    .logo{ width:600px; max-width:60%; height:auto; display:block; }
+    .left-top{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      height:100%;
+    }
+    .logo{
+      width:600px;
+      max-width:60%;
+      height:auto;
+      display:block;
+    }
     .intro{
-      padding:14px; border-radius:14px; background:#f8fafc; border:1px dashed #cbd5e1; color:var(--muted);
+      padding:14px;
+      border-radius:14px;
+      background:#f8fafc;
+      border:1px dashed #cbd5e1;
+      color:var(--muted);
     }
     .intro strong{color:var(--text)}
     .club{
-      margin-top:auto; padding:14px; border-radius:14px; border:1px solid var(--border);
+      margin-top:auto;
+      padding:14px;
+      border-radius:14px;
+      border:1px solid var(--border);
       background:linear-gradient(180deg,#ffffff 0%, #f9fbff 100%);
     }
-    .club .label{ font-size:12px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); margin-bottom:8px; font-weight:700; }
+    .club .label{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      color:var(--muted);
+      margin-bottom:8px;
+      font-weight:700;
+    }
     .club .hint{ color:var(--muted); font-size:14px; line-height:1.4; }
 
     /* RIGHT */
-    .wheel-wrap{ height:100%; display:grid; grid-template-rows: auto 1fr auto; gap:12px; min-height:0; }
-    .wheel-title{ font-weight:800; font-size:15px; padding:16px 16px 0 16px; }
-
+    .wheel-wrap{
+      height:100%;
+      display:grid;
+      grid-template-rows: auto 1fr auto;
+      gap:12px;
+      min-height:0;
+    }
+    .wheel-title{
+      font-weight:800;
+      font-size:15px;
+      padding:16px 16px 0 16px;
+    }
     .wheel-area{
       position:relative;
       display:grid;
@@ -81,15 +137,13 @@
       min-height:0;
       user-select:none;
     }
-
     canvas{
       width:min(420px, 92%);
       height:auto;
       aspect-ratio: 1/1;
       display:block;
-      cursor:pointer; /* roue cliquable */
+      cursor:pointer;
     }
-
     .pointer{
       position:absolute;
       top:8px;
@@ -102,53 +156,109 @@
       pointer-events:none;
     }
 
-    /* ✅ Bouton au centre de la roue */
-   .center-btn{
-  position:absolute;
-  z-index:4;
-  width:100px;
-  height:100px;
-  border-radius:999px;
-  border:2px solid #e2e8f0;
-  background: var(--gan-green);
-  color:#fff;
-  font-weight:900;
-  font-size:13px;
-  letter-spacing:.08em;
-  cursor:pointer;
-  box-shadow: 0 12px 20px rgba(11,122,75,.18);
-  display:grid;
-  place-items:center;
-  text-transform:uppercase;
+    /* Bouton au centre de la roue */
+    .center-btn{
+      position:absolute;
+      z-index:4;
+      width:100px;
+      height:100px;
+      border-radius:999px;
+      border:2px solid #e2e8f0;
+      background: var(--gan-green);
+      color:#fff;
+      font-weight:900;
+      font-size:13px;
+      letter-spacing:.08em;
+      cursor:pointer;
+      box-shadow: 0 12px 20px rgba(11,122,75,.18);
+      display:grid;
+      place-items:center;
+      text-transform:uppercase;
 
-  transform: translateY(28px);
-}
-.center-btn:active{
-  transform: translateY(28px) scale(.98);
-}
+      transform: translateY(28px);
+    }
+    .center-btn:active{
+      transform: translateY(28px) scale(.98);
+    }
     .center-btn[disabled]{ opacity:.55; cursor:not-allowed; }
 
-    .theme-card{ padding:14px; border-top:1px solid var(--border); background:#fff; }
-    .theme-label{ font-size:12px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-weight:800; }
-    .theme-title{ margin:6px 0 8px; font-weight:900; font-size:18px; color:var(--gan-blue); }
-    .theme-text{ margin:0; color:var(--text); line-height:1.4; font-size:14px; }
-
-    .bottom{ display:grid; grid-template-columns: 1.35fr 1fr; gap:16px; }
-    .photo{
-      width:100%; height:100%; object-fit:cover; border-radius: var(--radius);
-      border:1px solid var(--border); background:#e2e8f0; display:block; min-height:120px;
+    .theme-card{
+      padding:14px;
+      border-top:1px solid var(--border);
+      background:#fff;
     }
-    .wishes{ display:flex; flex-direction:column; gap:10px; height:100%; justify-content:space-between; }
-    .wishes .copy{ padding:14px; border-radius: var(--radius); border:1px solid var(--border); background:#fff; }
-    .wishes .copy .big{ font-weight:900; font-size:16px; margin:0 0 6px; }
-    .wishes .copy .small{ margin:0; color:var(--muted); font-size:13px; line-height:1.35; }
+    .theme-label{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      color:var(--muted);
+      font-weight:800;
+    }
+    .theme-title{
+      margin:6px 0 8px;
+      font-weight:900;
+      font-size:18px;
+      color:var(--gan-blue);
+    }
+    .theme-text{
+      margin:0;
+      color:var(--text);
+      line-height:1.4;
+      font-size:14px;
+    }
 
+    .bottom{
+      display:grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap:16px;
+    }
+    .photo{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius: var(--radius);
+      border:1px solid var(--border);
+      background:#e2e8f0;
+      display:block;
+      min-height:120px;
+    }
+    .wishes{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      height:100%;
+      justify-content:space-between;
+    }
+    .wishes .copy{
+      padding:14px;
+      border-radius: var(--radius);
+      border:1px solid var(--border);
+      background:#fff;
+    }
+    .wishes .copy .big{
+      font-weight:900;
+      font-size:16px;
+      margin:0 0 6px;
+    }
+    .wishes .copy .small{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.35;
+    }
     .btn-rdv{
-      appearance:none; border:0; cursor:pointer;
-      padding:12px 16px; border-radius:999px; font-weight:900; letter-spacing:.02em;
-      background: var(--gan-yellow); color:#1f2937;
+      appearance:none;
+      border:0;
+      cursor:pointer;
+      padding:12px 16px;
+      border-radius:999px;
+      font-weight:900;
+      letter-spacing:.02em;
+      background: var(--gan-yellow);
+      color:#1f2937;
       box-shadow: 0 10px 18px rgba(242,201,76,.25);
-      text-decoration:none; text-align:center;
+      text-decoration:none;
+      text-align:center;
     }
 
     @media (max-width: 860px){
@@ -156,7 +266,6 @@
       .grid{ grid-template-columns: 1fr; }
       .bottom{ grid-template-columns: 1fr; }
       .pad{ padding:16px; }
-      .tag{ display:none; }
     }
   </style>
 </head>
@@ -164,10 +273,10 @@
 <body>
   <div class="frame">
     <div class="pad">
+
       <div class="header">
-        <h1> <p> En 2026, voulez-vous faire partie du <p>
-          <p> club Gan Patrimoine 17&nbsp;?<p> </h1>
-              </div>
+        <h1 class="title-one-line">En 2026, voulez-vous faire partie du club Gan Patrimoine 17&nbsp;?</h1>
+      </div>
 
       <div class="grid">
 
@@ -175,13 +284,17 @@
         <div class="card">
           <div class="card-inner left-top">
             <img class="logo" src="logo-gan-patrimoine.png" alt="Logo Gan Patrimoine" />
+
             <div class="intro">
               <strong>Votre année sera placée sous le signe de :</strong><br/>
               Faites tourner la roue pour découvrir le thème du moment, puis prenez rendez-vous.
             </div>
+
             <div class="club">
               <div class="label">Notre métier :</div>
-              <div class="hint">Une approche <strong>sur-mesure</strong> autour de l’épargne, la retraite, la protection et la stratégie patrimoniale.</div>
+              <div class="hint">
+                Une approche <strong>sur-mesure</strong> autour de l’épargne, la retraite, la protection et la stratégie patrimoniale.
+              </div>
             </div>
           </div>
         </div>
@@ -194,8 +307,6 @@
             <div class="wheel-area">
               <div class="pointer" aria-hidden="true"></div>
               <canvas id="wheel" width="520" height="520" aria-label="Roue"></canvas>
-
-              <!-- ✅ bouton au CENTRE -->
               <button id="startBtn" class="center-btn">LANCER</button>
             </div>
 
@@ -301,7 +412,7 @@
     ctx.lineWidth = 3;
     ctx.stroke();
 
-    // centre (dessiné mais le bouton est par-dessus)
+    // centre
     ctx.beginPath();
     ctx.arc(cx, cy, 62, 0, Math.PI*2);
     ctx.fillStyle = "#ffffff";
@@ -309,7 +420,7 @@
     ctx.strokeStyle = "#e2e8f0";
     ctx.lineWidth = 2;
     ctx.stroke();
-    }
+  }
 
   function normalizeAngle(a){
     const twoPi = Math.PI * 2;
@@ -372,22 +483,13 @@
   // Init
   drawWheel(rotation);
 
-  // ✅ clic sur le bouton OU sur la roue
+  // clic sur le bouton OU sur la roue
   startBtn.addEventListener("click", spin);
   canvas.addEventListener("click", spin);
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
 
 
 
