@@ -97,21 +97,22 @@
 
     /* ✅ Bouton au centre de la roue */
     .center-btn{
-      position:absolute;
-      z-index:4;
-      width:140px;
-      height:140px;
-      border-radius:999px;
-      border:2px solid #e2e8f0;
-      background: var(--gan-green);
-      color:#fff;
-      font-weight:900;
-      letter-spacing:.06em;
-      cursor:pointer;
-      box-shadow: 0 16px 28px rgba(11,122,75,.20);
-      display:grid;
-      place-items:center;
-      text-transform:uppercase;
+  position:absolute;
+  z-index:4;
+  width:100px;        /* ⬅️ plus petit */
+  height:100px;       /* ⬅️ plus petit */
+  border-radius:999px;
+  border:2px solid #e2e8f0;
+  background: var(--gan-green);
+  color:#fff;
+  font-weight:900;
+  font-size:13px;     /* ⬅️ texte adapté */
+  letter-spacing:.08em;
+  cursor:pointer;
+  box-shadow: 0 12px 20px rgba(11,122,75,.18);
+  display:grid;
+  place-items:center;
+  text-transform:uppercase;
     }
     .center-btn:active{ transform: scale(.98); }
     .center-btn[disabled]{ opacity:.55; cursor:not-allowed; }
@@ -372,5 +373,6 @@
 
 </body>
 </html>
+
 
 
